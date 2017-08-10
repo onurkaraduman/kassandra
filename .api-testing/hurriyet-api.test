@@ -1,0 +1,12 @@
+curl --request GET \
+  --url https://api.hurriyet.com.tr/v1/date \
+  --header 'accept: application/json' \
+  --header 'apikey: 03acba78609d495c872d43c14ffc046a'
+
+
+
+
+curl --request GET \
+  --url https://api.hurriyet.com.tr/v1/articles?$select=Title&$filter=ModifiedDate%20ge%20Datetime%272014-10-10T10:41:31Z%27&$top=3 \
+  --header 'accept: application/json' \
+  --header 'apikey: 03acba78609d495c872d43c14ffc046a'
