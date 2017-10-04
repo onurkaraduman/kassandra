@@ -10,6 +10,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import retrofit.Call;
 import retrofit.Response;
@@ -39,7 +40,7 @@ public class NewsJob implements Job {
     @Autowired
     private NewsService newsService;
 
-    //    @Scheduled(cron = "*/2 * * * * *")
+    @Scheduled(cron = "*/2 * * * * *")
     @Override
     public void execute() throws IOException {
         Date lastNewsDate = getLastUpdateDate();

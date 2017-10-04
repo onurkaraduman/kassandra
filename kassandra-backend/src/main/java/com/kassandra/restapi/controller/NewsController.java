@@ -7,10 +7,7 @@ import com.kassandra.restapi.util.MapperUtil;
 import com.kassandra.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -26,6 +23,7 @@ public class NewsController implements Controller {
     @Autowired
     private NewsService newsService;
 
+    @CrossOrigin(origins = "http://localhost:8081")
     @RequestMapping(method = RequestMethod.GET)
     public Response getExchangeRates(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
         List<News> newsByDate = newsService.getNewsByDate(date);

@@ -21,12 +21,46 @@ public class ExchangeRateController implements Controller {
     @Autowired
     private ExchangeRateService exchangeRateService;
 
-    @RequestMapping(value = "/{currency1}/{referenceCurrency}", method = RequestMethod.GET)
+    @CrossOrigin(origins = "http://localhost:8081")
+    @RequestMapping(value = "/{currency1}/{referenceCurrency}", params = {"date"}, method = RequestMethod.GET)
     public Response getExchangeRates(@PathVariable String currency1,
                                      @PathVariable String referenceCurrency,
                                      @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
 
         List<ExchangeRate> exchangeRatesByDate = exchangeRateService.getExchangeRatesByDate(currency1, referenceCurrency, date);
         return new Response(exchangeRatesByDate);
+    }
+
+    @CrossOrigin(origins = "http://localhost:8081")
+    @RequestMapping(value = "/{currency1}/{referenceCurrency}", params = {"startDate", "endDate"}, method = RequestMethod.GET)
+    public Response getExchangeRatesBetweenDates(@PathVariable String currency1,
+                                                 @PathVariable String referenceCurrency,
+                                                 @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+                                                 @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
+
+        List<ExchangeRate> exchangeRatesByDate = exchangeRateService.getExchangeRatesBetweenDates(currency1, referenceCurrency, startDate, endDate);
+        return new Response(exchangeRatesByDate);
+    }
+
+    @CrossOrigin(origins = "http://localhost:8081")
+    @RequestMapping(value = "/{currency1}/{referenceCurrency}", params = {"year", "month"}, method = RequestMethod.GET)
+    public Response getExchangeRatesByYearAndMonth(@PathVariable String currency1,
+                                                   @PathVariable String referenceCurrency,
+                                                   @RequestParam("year") Integer year,
+                                                   @RequestParam("month") Integer month) {
+
+        List<ExchangeRate> exchangeRatesByDate = exchangeRateService.getExchangeRatesByYearAndMonth(currency1, referenceCurrency, year, month);
+        return new Response(exchangeRatesByDate);
+    }
+
+    @CrossOrigin(origins = "http://localhost:8081")
+    @RequestMapping(value = "/{currency1}/{referenceCurrency}", params = {"monthBefore"}, method = RequestMethod.GET)
+    public Response getLastExchangeRates(@PathVariable String currency1,
+                                         @PathVariable String referenceCurrency,
+                                         @RequestParam("monthBefore") Integer month) {
+
+
+        List<ExchangeRate> lastNMonthExchangeRates = exchangeRateService.getLastNMonthExchangeRates(currency1, referenceCurrency, month);
+        return new Response(lastNMonthExchangeRates);
     }
 }

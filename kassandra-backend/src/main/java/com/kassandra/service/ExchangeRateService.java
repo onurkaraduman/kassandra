@@ -5,6 +5,7 @@ import com.kassandra.repository.ExchangeRateRepository;
 import com.kassandra.repository.Repository;
 import com.kassandra.repository.domain.Currency;
 import com.kassandra.repository.domain.ExchangeRate;
+import com.kassandra.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,47 @@ public class ExchangeRateService extends AbstractService<ExchangeRate> {
         Currency requestedCurrency = currencyRepository.findByName(currency);
         Currency requestedRefCurrency = currencyRepository.findByName(referenceCurrency);
         return this.exchangeRateRepository.findByCurrencyAndReferenceCurrencyAndDate(requestedCurrency, requestedRefCurrency, date);
+    }
+
+    public List<ExchangeRate> getExchangeRatesBetweenDates(String currency,
+                                                           String referenceCurrency,
+                                                           Date startDate,
+                                                           Date endDate) {
+        Currency requestedCurrency = currencyRepository.findByName(currency);
+        Currency requestedRefCurrency = currencyRepository.findByName(referenceCurrency);
+        return this.exchangeRateRepository.findByCurrencyAndReferenceCurrencyAndDateBetween(requestedCurrency,
+                requestedRefCurrency,
+                startDate,
+                endDate);
+    }
+
+    public List<ExchangeRate> getExchangeRatesByYearAndMonth(String currency,
+                                                             String referenceCurrency,
+                                                             Integer year,
+                                                             Integer month) {
+        Currency requestedCurrency = currencyRepository.findByName(currency);
+        Currency requestedRefCurrency = currencyRepository.findByName(referenceCurrency);
+        Date firstDayOfMonth = DateUtil.getFirstDayOfMonth(year, month);
+        Date lastDayOfMonth = DateUtil.getLastDayOfMonth(year, month);
+
+        return this.exchangeRateRepository.findByCurrencyAndReferenceCurrencyAndDateBetween(requestedCurrency,
+                requestedRefCurrency,
+                firstDayOfMonth,
+                lastDayOfMonth);
+    }
+
+    public List<ExchangeRate> getLastNMonthExchangeRates(String currency,
+                                                         String referenceCurrency,
+                                                         Integer monthBefore) {
+        Currency requestedCurrency = currencyRepository.findByName(currency);
+        Currency requestedRefCurrency = currencyRepository.findByName(referenceCurrency);
+        Date firstDayOfMonth = DateUtil.getNMonthAgo(monthBefore);
+        Date now = DateUtil.getNow();
+
+        return this.exchangeRateRepository.findByCurrencyAndReferenceCurrencyAndDateBetween(requestedCurrency,
+                requestedRefCurrency,
+                firstDayOfMonth,
+                now);
     }
 
     public Date getLastUpdateDate() {

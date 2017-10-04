@@ -25,4 +25,37 @@ public class DateUtil {
         DateTime dt = DateTime.parse(textDate);
         return dt.toDate();
     }
+
+    public static Date getFirstDayOfMonth(Integer year, Integer month) {
+        if (year == null || month == null) {
+            throw new IllegalArgumentException("Year and month couldnt be null");
+        }
+        DateTime dt = new DateTime(year, month, 1, 0, 0, 0, 0);
+        return dt.toDate();
+    }
+
+    public static Date getNMonthAgo(Integer n) {
+        DateTime dt = new DateTime();
+        return dt.minusMonths(n).toDate();
+    }
+
+    public static Date getNow(){
+        DateTime dt = new DateTime();
+        return dt.toDate();
+    }
+
+    /**
+     * Calculate first day of next month and come back 1 day before
+     *
+     * @param year
+     * @param month
+     * @return
+     */
+    public static Date getLastDayOfMonth(Integer year, Integer month) {
+        if (year == null || month == null) {
+            throw new IllegalArgumentException("Year and month couldnt be null");
+        }
+        DateTime dt = new DateTime(year, month + 1, 1, 0, 0, 0, 0).minus(1);
+        return dt.toDate();
+    }
 }
