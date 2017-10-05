@@ -1,0 +1,38 @@
+<table>
+  <tr>
+    <td>
+      <label>From</label>
+    </td>
+    <td>
+      <input type="date" [(ngModel)]="filter.from"/>
+    </td>
+    <td>
+      <label>To</label>
+    </td>
+    <td>
+      <input type="date" [(ngModel)]="filter.to"/>
+    </td>
+    <td>
+      Zoom
+    </td>
+    <td *ngFor="let zoom of filter.getZooms()">
+      <span (click)="changeZoom(zoom)">{{zoom}}</span>
+    </td>
+  </tr>
+</table>
+
+<input type="button" (click)="doFilter()" value="Filtrele">
+<div class="row" align="left" style="float: left; display: block; width: 700px; height: 200px;">
+  <div class="col-md-6">
+    <div>
+      <canvas baseChart
+              [datasets]="chart.lineChartData"
+              [labels]="chart.lineChartLabels"
+              [options]="chart.lineChartOptions"
+              [colors]="chart.lineChartColors"
+              [legend]="chart.lineChartLegend"
+              [chartType]="chart.lineChartType"
+              (chartClick)="chartClicked($event)"></canvas>
+    </div>
+  </div>
+</div>

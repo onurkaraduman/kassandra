@@ -14,8 +14,6 @@ import retrofit.Call;
 import retrofit.Response;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -34,19 +32,26 @@ public class ExchangeRateJob implements Job {
     @Autowired
     private ExchangeRateService exchangeRateService;
 
-    //@Scheduled(cron = "*/2 * * * * *")
+    @Scheduled(cron = "*/2 * * * * *")
     @Override
     public void execute() throws IOException {
+        for (int i = 0; i < 1000; i++) {
+            update();
+        }
+    }
+
+    private void update() throws IOException {
         Date lastUpdateDate = exchangeRateService.getLastUpdateDate();
         DateTime dateTime = null;
         if (lastUpdateDate == null) {
-             dateTime = dateTimeFormatter.parseDateTime(START_DATE);
+            dateTime = dateTimeFormatter.parseDateTime(START_DATE);
         } else {
             dateTime = new DateTime(DateUtil.oneDayAfter(lastUpdateDate));
         }
         Call<ExchangeRate> exchangeRates = exchangeRateIntegrationService.getExchangeRates(dateTimeFormatter.print(dateTime), "EUR", new String[]{"TRY"});
         Response<ExchangeRate> execute = exchangeRates.execute();
         ExchangeRate body = execute.body();
-        exchangeRateService.saveExchangeRate(body.getBase(), body.getRates(), lastUpdateDate);
+        if (body != null && body.getRates().size() > 0)
+            exchangeRateService.saveExchangeRate(body.getBase(), body.getRates(), dateTime.toDate());
     }
 }

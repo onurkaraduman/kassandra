@@ -1,0 +1,10 @@
+<h2>News</h2>
+<h1>{{date}}</h1>
+<table>
+  <tr *ngFor="let column of columns">
+    <td>{{column.title}}</td>
+  </tr>
+  <tr *ngFor="let row of news">
+    <td><a href="{{row.url}}">{{row.title}}</a></td>
+  </tr>
+</table>
