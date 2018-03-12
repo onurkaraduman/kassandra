@@ -69,3 +69,15 @@ This is the web service of the kassandra.
   ````
   
   ### Usage
+
+  Curl is used for testing purpose.
+
+  Retrieve news by date
+  ````
+  curl http://localhost:8080/api/v1.0.0/news?date=2006-01-05
+  ````
+
+  Retrieve exchange rates by date
+  ````
+  curl http://localhost:8080/api/v1.0.0/exchangerate/TRY/EUR?date=2006-01-05
+  ````

@@ -1,11 +1,11 @@
-import {Component, OnInit, Output, EventEmitter} from "@angular/core";
-import {CurrencyProviderService} from "../../core/providers/currency/currency-provider.service";
-import {DatePipe} from "@angular/common";
-import {ExchangeRate} from "../../core/model/currency/exchange-rate";
-import {ChartModel} from "./chart-model";
-import {Filter} from "./filter/filter";
-import {NewsProviderService} from "../../core/providers/news/news-provider.service";
-import {ExchangeRateServiceService} from "../../core/services/exchange-rate-service.service";
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { CurrencyProviderService } from "../../core/providers/currency/currency-provider.service";
+import { DatePipe } from "@angular/common";
+import { ExchangeRate } from "../../core/model/currency/exchange-rate";
+import { ChartModel } from "./chart-model";
+import { Filter } from "./filter/filter";
+import { NewsProviderService } from "../../core/providers/news/news-provider.service";
+import { ExchangeRateServiceService } from "../../core/services/exchange-rate-service.service";
 
 @Component({
   selector: 'app-currency',
@@ -37,6 +37,7 @@ export class CurrencyComponent implements OnInit {
     let from = this.filter.from;
     let to = this.filter.to;
     this.exchangeRateService.getExchangeRatesBetweenDate('TRY', 'EUR', from, to).subscribe(data => {
+      console.log("data:"+JSON.stringify(data.json()));
       let exchRates: ExchangeRate[] = <ExchangeRate[]>data.json();
       if (exchRates.length > 0)
         this.chart.updateData(exchRates);
@@ -44,18 +45,21 @@ export class CurrencyComponent implements OnInit {
   }
 
   public chartClicked(e: any): void {
-    this.news = [];
-    var chartData = e.active[0]['_chart'].config.data;
-    var idx = e.active[0]['_index'];
+    try {
+      this.news = [];
+      var chartData = e.active[0]['_chart'].config.data;
+      var idx = e.active[0]['_index'];
 
-    var label = chartData.labels[idx];
-    var value = chartData.datasets[0].data[idx];
-    console.log("label:" + label + "  value:" + value);
-    this.chartClickNotify.emit(label);
+      var label = chartData.labels[idx];
+      var value = chartData.datasets[0].data[idx];
+      this.chartClickNotify.emit(label);
+    }
+    catch (e) {
+      console.log("Please click on any date");
+    }
   }
 
   public changeZoom(obj: string) {
-    console.log("clicked" + obj);
     this.chart.clearChart();
     switch (obj) {
       case "M1":
@@ -67,7 +71,7 @@ export class CurrencyComponent implements OnInit {
       case "M6":
         this.updateM6();
         break;
-      case  "Y1":
+      case "Y1":
         this.updateY1();
         break;
       case "Y2":
@@ -115,7 +119,6 @@ export class CurrencyComponent implements OnInit {
   getLastNMonth(n: number) {
     this.exchangeRateService.getLastNMonthExchangeRates('TRY', 'EUR', n).subscribe(data => {
       let exchRates: ExchangeRate[] = <ExchangeRate[]>data.json();
-      console.log(exchRates);
       if (exchRates.length > 0)
         this.chart.updateData(exchRates);
     });

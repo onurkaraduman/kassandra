@@ -12,7 +12,8 @@ import java.util.Date;
  */
 public class DateUtil {
 
-    public static DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
+    public static DateTimeFormatter DATE_FORMATTER1 = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
+    public static DateTimeFormatter DATE_FORMATTER2 = DateTimeFormat.forPattern("yyyy-MM-dd");
 
     public static Date oneDayAfter(Date date) {
         DateTime dtOrg = new DateTime(date);

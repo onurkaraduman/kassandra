@@ -1,4 +1,4 @@
-import {DatePipe} from "@angular/common";
+import { DatePipe } from "@angular/common";
 export class DateUtil {
 
   private static datePipe: DatePipe = new DatePipe('en-US');
@@ -9,6 +9,20 @@ export class DateUtil {
       pattern = this.DEFAULT_DATE_PATTERN;
     }
     return this.datePipe.transform(new Date(), pattern);
+  }
+
+  public static getMocStartkDate(pattern: string): string {
+    if (pattern == null) {
+      pattern = this.DEFAULT_DATE_PATTERN;
+    }
+    return this.datePipe.transform('2006-01-01', pattern);
+  }
+
+  public static getMocEndkDate(pattern: string): string {
+    if (pattern == null) {
+      pattern = this.DEFAULT_DATE_PATTERN;
+    }
+    return this.datePipe.transform('2006-01-15', pattern);
   }
 
   public static getMonthAgo(number: number, pattern: string): string {

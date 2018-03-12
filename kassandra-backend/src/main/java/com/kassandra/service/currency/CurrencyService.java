@@ -1,8 +1,9 @@
-package com.kassandra.service;
+package com.kassandra.service.currency;
 
 import com.kassandra.repository.CurrencyRepository;
 import com.kassandra.repository.Repository;
 import com.kassandra.repository.domain.Currency;
+import com.kassandra.service.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

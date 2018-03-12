@@ -2,8 +2,9 @@ package com.kassandra.restapi.controller;
 
 import com.kassandra.repository.domain.ExchangeRate;
 import com.kassandra.restapi.model.Response;
-import com.kassandra.service.ExchangeRateService;
+import com.kassandra.service.currency.ExchangeRateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +20,10 @@ import java.util.List;
 public class ExchangeRateController implements Controller {
 
     @Autowired
+    @Qualifier("ExchangeRateRealTimeService")
     private ExchangeRateService exchangeRateService;
 
-    @CrossOrigin(origins = "http://localhost:8081")
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/{currency1}/{referenceCurrency}", params = {"date"}, method = RequestMethod.GET)
     public Response getExchangeRates(@PathVariable String currency1,
                                      @PathVariable String referenceCurrency,
@@ -31,7 +33,7 @@ public class ExchangeRateController implements Controller {
         return new Response(exchangeRatesByDate);
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/{currency1}/{referenceCurrency}", params = {"startDate", "endDate"}, method = RequestMethod.GET)
     public Response getExchangeRatesBetweenDates(@PathVariable String currency1,
                                                  @PathVariable String referenceCurrency,

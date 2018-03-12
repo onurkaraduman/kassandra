@@ -21,6 +21,6 @@ export class MainComponent implements OnInit {
 
   public newsNotify(date: string) {
     this.date = date;
-    this.newsBoard.update();
+    this.newsBoard.update(date);
   }
 }

@@ -24,14 +24,13 @@ export class NewsBoardComponent implements OnInit {
     title: 'Title', name: 'title'
   }];
 
-  public update() {
-    this.provideNews(this.date);
+  public update(date: string) {
+    this.provideNews(date);
   }
 
   public provideNews(date: string) {
     this.newService.getNewsByDate(date).subscribe(data => {
       this.news = <News[]>data.json();
-      console.log(this.news);
     });
   }
 }

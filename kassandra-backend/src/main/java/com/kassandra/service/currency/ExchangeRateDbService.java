@@ -1,10 +1,11 @@
-package com.kassandra.service;
+package com.kassandra.service.currency;
 
 import com.kassandra.repository.CurrencyRepository;
 import com.kassandra.repository.ExchangeRateRepository;
 import com.kassandra.repository.Repository;
 import com.kassandra.repository.domain.Currency;
 import com.kassandra.repository.domain.ExchangeRate;
+import com.kassandra.service.AbstractService;
 import com.kassandra.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,8 @@ import java.util.Map;
  * @author Onur Karaduman
  * @since 15.07.17
  */
-@Service
-public class ExchangeRateService extends AbstractService<ExchangeRate> {
+@Service("ExchangeRateDbService")
+public class ExchangeRateDbService extends AbstractService<ExchangeRate> implements ExchangeRateService {
 
     @Autowired
     private ExchangeRateRepository exchangeRateRepository;
@@ -31,6 +32,7 @@ public class ExchangeRateService extends AbstractService<ExchangeRate> {
         return this.exchangeRateRepository;
     }
 
+    @Override
     public List<ExchangeRate> getExchangeRatesByDate(String currency,
                                                      String referenceCurrency,
                                                      Date date) {
@@ -39,6 +41,7 @@ public class ExchangeRateService extends AbstractService<ExchangeRate> {
         return this.exchangeRateRepository.findByCurrencyAndReferenceCurrencyAndDate(requestedCurrency, requestedRefCurrency, date);
     }
 
+    @Override
     public List<ExchangeRate> getExchangeRatesBetweenDates(String currency,
                                                            String referenceCurrency,
                                                            Date startDate,
@@ -51,6 +54,7 @@ public class ExchangeRateService extends AbstractService<ExchangeRate> {
                 endDate);
     }
 
+    @Override
     public List<ExchangeRate> getExchangeRatesByYearAndMonth(String currency,
                                                              String referenceCurrency,
                                                              Integer year,
@@ -66,6 +70,7 @@ public class ExchangeRateService extends AbstractService<ExchangeRate> {
                 lastDayOfMonth);
     }
 
+    @Override
     public List<ExchangeRate> getLastNMonthExchangeRates(String currency,
                                                          String referenceCurrency,
                                                          Integer monthBefore) {
@@ -80,10 +85,12 @@ public class ExchangeRateService extends AbstractService<ExchangeRate> {
                 now);
     }
 
+    @Override
     public Date getLastUpdateDate() {
         return this.exchangeRateRepository.getLastUpdateDate();
     }
 
+    @Override
     public void saveExchangeRate(String refCurrencyName, Map<String, Object> currencyMap, Date date) {
         Currency refCurrency = currencyRepository.findByName(refCurrencyName);
         if (refCurrency == null) {

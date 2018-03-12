@@ -1,10 +1,12 @@
 package com.kassandra.job;
 
 import com.kassandra.integration.exchangerate.model.ExchangeRate;
-import com.kassandra.integration.exchangerate.model.Rates;
 import com.kassandra.integration.exchangerate.service.ExchangeRateIntegrationService;
-import com.kassandra.service.CurrencyService;
+import com.kassandra.service.currency.CurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jmx.export.annotation.ManagedOperation;
+import org.springframework.jmx.export.annotation.ManagedResource;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import retrofit.Call;
@@ -18,7 +20,9 @@ import java.util.Map;
  * @author Onur Karaduman
  * @since 16.07.17
  */
+@ManagedResource
 @Service
+@EnableScheduling
 public class CurrencyJob implements Job {
 
 
@@ -29,6 +33,7 @@ public class CurrencyJob implements Job {
     private CurrencyService currencyService;
 
     @Scheduled(cron = "*/2 * * * * *")
+    @ManagedOperation
     @Override
     public void execute() throws IOException {
         Call<ExchangeRate> allExchangeRates = exchangeRateIntegrationService.getAllExchangeRates("EUR");

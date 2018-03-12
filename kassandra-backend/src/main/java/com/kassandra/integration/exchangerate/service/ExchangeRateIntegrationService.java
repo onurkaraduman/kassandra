@@ -1,14 +1,10 @@
 package com.kassandra.integration.exchangerate.service;
 
-import com.kassandra.integration.common.IntegrationService;
 import com.kassandra.integration.exchangerate.model.ExchangeRate;
-import org.springframework.stereotype.Service;
 import retrofit.Call;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
-
-import java.util.Date;
 
 /**
  * @author Onur Karaduman

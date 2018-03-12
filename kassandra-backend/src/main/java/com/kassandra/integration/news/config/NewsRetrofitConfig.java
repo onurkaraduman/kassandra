@@ -7,6 +7,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import retrofit.JacksonConverterFactory;
@@ -19,7 +20,8 @@ import retrofit.Retrofit;
 @Configuration
 public class NewsRetrofitConfig {
 
-    private static String NEWS_ENV_VAR = "NEWS_API_KEY";
+    @Value("app.news.api.key")
+    private String NEWS_ENV_VAR;
     private static String NEWS_API_KEY = "apiKey";
 
     @Bean

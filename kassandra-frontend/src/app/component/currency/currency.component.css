@@ -1,0 +1,18 @@
+.currency {
+    border: 1px solid #327a81;
+    border-radius: 10px;
+    -webkit-box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
+            box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
+    max-width: calc(100% - 2em);
+    margin: 1em auto;
+    float: left; 
+    display: block; 
+    width: 900px; 
+    height: 600px;
+  }
+  .graph{
+    float: left; 
+    display: block; 
+    width: 700px; 
+    height: 200px;
+  }

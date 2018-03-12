@@ -62,8 +62,11 @@ export class ChartModel {
 
   public filterByZoom(zoom: Zoom) {
     let datePattern = 'yyyy-MM-dd';
-    let endDate = DateUtil.getToday(datePattern);
-    let startDate = DateUtil.getToday(datePattern);
+   // let endDate = DateUtil.getToday(datePattern);
+    //let startDate = DateUtil.getToday(datePattern);
+
+    let endDate = DateUtil.getMocEndkDate(null);
+    let startDate = DateUtil.getMocStartkDate(null);
     switch (zoom) {
       case Zoom.M1:
         startDate = DateUtil.getMonthAgo(1, datePattern);

@@ -1,8 +1,9 @@
-package com.kassandra.service;
+package com.kassandra.service.news;
 
 import com.kassandra.repository.NewsRepository;
 import com.kassandra.repository.Repository;
 import com.kassandra.repository.domain.News;
+import com.kassandra.service.AbstractService;
 import com.kassandra.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import java.util.List;
  * @since 15.07.17
  */
 @Service
-public class NewsService extends AbstractService<News> {
+public class NewsDbService extends AbstractService<News> {
 
     @Autowired
     private NewsRepository newsRepository;
