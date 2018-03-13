@@ -22,7 +22,7 @@ import java.util.List;
 public class NewsController implements Controller {
 
     @Autowired
-    @Qualifier("NewsRealTimeService")
+    @Qualifier("NewsDbService")
     private NewsService newsDbService;
 
     @CrossOrigin(origins = "http://localhost:4200")

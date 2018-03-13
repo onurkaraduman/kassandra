@@ -20,7 +20,7 @@ import java.util.List;
 public class ExchangeRateController implements Controller {
 
     @Autowired
-    @Qualifier("ExchangeRateRealTimeService")
+    @Qualifier("ExchangeRateDbService")
     private ExchangeRateService exchangeRateService;
 
     @CrossOrigin(origins = "http://localhost:4200")

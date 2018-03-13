@@ -5,6 +5,7 @@ import com.kassandra.integration.exchangerate.service.ExchangeRateIntegrationSer
 import com.kassandra.service.currency.ExchangeRateDbService;
 import com.kassandra.util.DateUtil;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeComparator;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,9 @@ public class ExchangeRateJob implements Job {
         if (lastUpdateDate == null) {
             dateTime = dateTimeFormatter.parseDateTime(START_DATE);
         } else {
+            if (DateUtil.compareDateOnly(lastUpdateDate, new Date()) == 0) {
+                return;
+            }
             dateTime = new DateTime(DateUtil.oneDayAfter(lastUpdateDate));
         }
         Call<ExchangeRate> exchangeRates = exchangeRateIntegrationService.getExchangeRates(dateTimeFormatter.print(dateTime), "EUR", new String[]{"TRY"});

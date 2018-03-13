@@ -1,6 +1,7 @@
 package com.kassandra.util;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeComparator;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -40,7 +41,7 @@ public class DateUtil {
         return dt.minusMonths(n).toDate();
     }
 
-    public static Date getNow(){
+    public static Date getNow() {
         DateTime dt = new DateTime();
         return dt.toDate();
     }
@@ -58,5 +59,9 @@ public class DateUtil {
         }
         DateTime dt = new DateTime(year, month + 1, 1, 0, 0, 0, 0).minus(1);
         return dt.toDate();
+    }
+
+    public static int compareDateOnly(Date d1, Date d2) {
+        return DateTimeComparator.getDateOnlyInstance().compare(d1, d2);
     }
 }

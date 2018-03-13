@@ -50,6 +50,9 @@ public class NewsJob extends AbstractJob {
         Response<List<News>> newsResponse = null;
         int remainingHour = MAX_REQUEST_IN_HOUR;
         do {
+            if (DateUtil.compareDateOnly(lastNewsDate, new Date()) == 0) {
+                return;
+            }
             newsResponse = getNewsByModifiedDate(lastNewsDate);
             if (newsResponse.body() != null && !newsResponse.body().isEmpty()) {
                 List<com.kassandra.repository.domain.News> adaptedNews1 = NewsAdapter.adapt(newsResponse.body());

@@ -26,12 +26,15 @@ public class CurrencyService extends AbstractService<Currency> {
 
     public void saveCurrencies(List<String> currencies) {
         for (String currency : currencies) {
-            Currency cur = new Currency();
-            cur.setName(currency);
-            try {
-                currencyRepository.save(cur);
-            } catch (Exception exception) {
-                continue;
+            Currency currencyInDb = currencyRepository.findByName(currency);
+            if (currencyInDb == null) {
+                Currency cur = new Currency();
+                cur.setName(currency);
+                try {
+                    currencyRepository.save(cur);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
         }
     }

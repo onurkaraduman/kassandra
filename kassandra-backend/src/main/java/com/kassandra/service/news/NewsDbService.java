@@ -15,8 +15,8 @@ import java.util.List;
  * @author Onur Karaduman
  * @since 15.07.17
  */
-@Service
-public class NewsDbService extends AbstractService<News> {
+@Service("NewsDbService")
+public class NewsDbService extends AbstractService<News> implements NewsService {
 
     @Autowired
     private NewsRepository newsRepository;
