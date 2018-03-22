@@ -25,7 +25,7 @@ public class NewsController implements Controller {
     @Qualifier("NewsDbService")
     private NewsService newsDbService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = {"http://localhost:4200", "https://onurkaraduman.github.io"})
     @RequestMapping(method = RequestMethod.GET)
     public Response getExchangeRates(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
         List<News> newsByDate = newsDbService.getNewsByDate(date);
